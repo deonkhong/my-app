@@ -1,26 +1,45 @@
+import { PanelGroup, Panel } from "react-resizable-panels";
+
 export default function RightPanelComponent({
   content,
   showBottomPanel,
 }: {
-  content: string;
+  content: React.ReactNode;
   showBottomPanel: boolean;
 }) {
-  return (
-    <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
-      <div style={{ flex: 1, backgroundColor: "#eaeaea" }}>
-        <h3>MapView</h3>
-        {/* Your MapView content */}
+  if (!showBottomPanel) {
+    return (
+      <div style={{ height: "100%", display: "flex", flexDirection: "column" }}>
+        <div style={{ flex: 1, background: "#eaeaea" }}>
+          <h3>MapView</h3>
+          {/* ArcGIS MapView container */}
+        </div>
       </div>
+    );
+  }
 
-      {/* Conditionally render the bottom section */}
-      {showBottomPanel && (
+  return (
+    <PanelGroup direction="vertical">
+      <Panel minSize={30} defaultSize={60}>
+        <div style={{ height: "100%", background: "#eaeaea" }}>
+          <h3>MapView</h3>
+          {/* ArcGIS MapView container */}
+        </div>
+      </Panel>
+
+      <Panel minSize={20} defaultSize={40}>
         <div
-          style={{ height: "50%", backgroundColor: "#f0f0f0", padding: "10px" }}
+          style={{
+            height: "100%",
+            background: "#f0f0f0",
+            padding: 10,
+            overflow: "auto",
+          }}
         >
           <h3>Page Below Map</h3>
-          <p>{content}</p>
+          {content}
         </div>
-      )}
-    </div>
+      </Panel>
+    </PanelGroup>
   );
 }

@@ -1,22 +1,31 @@
 import React, { useState } from "react";
 
+type Props = {
+  setContent: (c: React.ReactNode) => void;
+  setShowBottomPanel: (show: boolean) => void;
+};
+
 export default function LeftPanelComponent({
-  content,
   setContent,
   setShowBottomPanel,
-}: {
-  content: string;
-  setContent: (content: string) => void;
-  setShowBottomPanel: (show: boolean) => void;
-}) {
-  const handleChangeContent = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setContent(e.target.value); // Update content in parent
+}: Props) {
+  const [input, setInput] = useState("");
 
-    if (e.target.value.trim() !== "") {
+  const handleChangeContent = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInput(e.target.value);
+    setContent(
+      <div>
+        <h4>Generated Snapshot</h4>
+        <p>You entered: {e.target.value}</p>
+      </div>
+    );
+
+    if (e.target.value.trim()) {
       // Show bottom panel if content is not empty
       setShowBottomPanel(true);
     } else {
       // Hide bottom panel if content is empty
+      setContent(null);
       setShowBottomPanel(false);
     }
   };
@@ -26,7 +35,7 @@ export default function LeftPanelComponent({
       <h2>Details Panel</h2>
       <input
         type="text"
-        value={content}
+        value={input}
         onChange={handleChangeContent}
         placeholder="Type something here..."
       />

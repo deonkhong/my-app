@@ -5,7 +5,7 @@ import RightPanelComponent from "./Components/RightPanelComponent";
 
 // Parent Component (App)
 const App: React.FC = () => {
-  const [content, setContent] = useState<string>(""); // Manage content in the parent
+  const [content, setContent] = useState<React.ReactNode>(null); // Manage content in the parent
   const [showBottomPanel, setShowBottomPanel] = useState(false);
 
   return (
@@ -14,7 +14,6 @@ const App: React.FC = () => {
         {/* Left Panel */}
         <Panel minSize={200} defaultSize={300}>
           <LeftPanelComponent
-            content={content}
             setContent={setContent}
             setShowBottomPanel={setShowBottomPanel}
           />
